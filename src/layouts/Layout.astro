@@ -1,5 +1,6 @@
 ---
 import "@/styles/global.css";
+import SpeedInsights from '@vercel/speed-insights/astro';
 import Aside from "@/components/Aside.astro";
 ---
 
@@ -12,6 +13,7 @@ import Aside from "@/components/Aside.astro";
     <link rel="icon" href="/logo.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>MOS | Maple Orbit Station</title>
+    <SpeedInsights />
 
     <script is:inline>
       const isClosed = localStorage.getItem("sidebarClosed") === "true";
