@@ -39,10 +39,11 @@ const asideTabs = [
           <li>
             <a
               href={`${tab.enabled ? tab.path : ""}`}
-              class={`flex gap-3 ${tab.enabled ? "" : "opacity-50 cursor-not-allowed"}`}
+              class={`nav-link flex gap-3 ${tab.enabled ? "" : "opacity-50 cursor-not-allowed"}`}
+              title={tab.name}
             >
               <tab.icon class="nav-icon" />
-              {tab.name}
+              <span class="nav-text">{tab.name}</span>
             </a>
             {}
           </li>
@@ -50,10 +51,11 @@ const asideTabs = [
       }
     </ul>
 
-    <div class="mt-auto px-3 pb-6">
+    <div class="mt-auto px-3 pb-6 feedback-btn-wrap">
       <button
         id="open-feedback-modal"
         aria-label="Open Features Feedback"
+        title="Features Feedback"
         class="group relative overflow-hidden flex w-full items-center py-3 px-3 bg-linear-to-r from-fuchsia-900/40 to-indigo-900/40 border border-fuchsia-500/30 hover:from-fuchsia-600 hover:to-indigo-600 text-white rounded-xl font-bold shadow-[0_0_15px_rgba(217,70,239,0.15)] hover:shadow-[0_0_25px_rgba(217,70,239,0.4)] transition-all duration-300 cursor-pointer"
       >
         <div class="relative shrink-0 w-6 h-6 ml-1">
@@ -76,13 +78,13 @@ const asideTabs = [
       </button>
     </div>
   </nav>
-  <footer class="flex gap-5 items-center border-t border-white/10 w-full p-4">
+  <footer class="sidebar-footer flex gap-5 items-center border-t border-white/10 w-full p-4">
     <img
       src={MOSLogo?.src}
       alt="Maple Orbit Station logo"
-      class="size-16 rounded-full shadow-lg shadow-indigo-100/10 border border-indigo-100/12"
+      class="size-16 rounded-full shadow-lg shadow-indigo-100/10 border border-indigo-100/12 shrink-0"
     />
-    <p class="text-lg italic">
+    <p class="nav-text text-lg italic">
       Made by <span class="font-semibold">0xRef</span>
     </p>
   </footer>
@@ -157,170 +159,187 @@ const asideTabs = [
 </div>
 
 <style>
-  .feedback-modal-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    background: rgba(10, 8, 20, 0.65);
-    backdrop-filter: blur(4px);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
+  /* --- Collapsed sidebar responsiveness ---
+     Assumes your global CSS already handles the base `.sidebar` width/
+     transition and toggles `sidebar-closed` on <html> (as your script does).
+     These rules only handle what happens to icons/text in that state. */
 
-  .feedback-modal-overlay.is-open {
-    opacity: 1;
-  }
+  /* ==========================================================
+   SIDEBAR
+========================================================== */
 
-  .feedback-modal {
-    position: relative;
-    width: 100%;
-    max-width: 440px;
-    background: linear-gradient(160deg, #1f1b33 0%, #15131f 100%);
-    border: 1px solid rgba(217, 70, 239, 0.3);
-    border-radius: 1.25rem;
-    padding: 2rem 1.75rem 1.75rem;
-    box-shadow: 0 0 40px rgba(217, 70, 239, 0.25);
-    opacity: 0;
-    transform: translateY(24px) scale(0.95);
-    transition:
-      opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  }
+.sidebar {
+  overflow-x: hidden;
+  overflow-y: auto;
+  transition:
+    width .28s cubic-bezier(.4, 0, .2, 1),
+    box-shadow .25s ease;
+}
 
-  .feedback-modal-overlay.is-open .feedback-modal {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+/* -----------------------------
+   Header
+------------------------------ */
 
-  .feedback-modal-close {
-    position: absolute;
-    top: 0.9rem;
-    right: 0.9rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 0.6rem;
-    color: rgba(255, 255, 255, 0.55);
-    background: rgba(255, 255, 255, 0.05);
-    border: none;
-    cursor: pointer;
-    transition:
-      background 0.2s,
-      color 0.2s;
-  }
+.sidebar-header {
+  transition: justify-content .25s ease;
+}
 
-  .feedback-modal-close:hover {
-    background: rgba(255, 255, 255, 0.12);
-    color: #fff;
-  }
+.sidebar-title {
+  width: auto;
+  opacity: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  transform: translateX(0);
+  transition:
+    opacity .2s ease,
+    width .25s ease,
+    transform .25s ease;
+}
 
-  .feedback-modal-title {
-    margin: 0;
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #fff;
-  }
+/* -----------------------------
+   Navigation
+------------------------------ */
 
-  .feedback-modal-subtitle {
-    margin: 0.4rem 0 1.5rem;
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.6);
-  }
+.nav-link {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  border-radius: 14px;
+  transition:
+    background .2s ease,
+    transform .2s ease,
+    gap .25s ease,
+    justify-content .25s ease;
+}
 
-  .feedback-modal-options {
-    display: flex;
-    flex-direction: column;
-    gap: 0.9rem;
-  }
+.nav-icon {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
+  flex: 0 0 24px;
+  transition: transform .2s ease;
+}
 
-  .feedback-option {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    border-radius: 0.9rem;
-    text-decoration: none;
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.03);
-    transition:
-      transform 0.2s ease,
-      border-color 0.2s ease,
-      box-shadow 0.2s ease,
-      background 0.2s ease;
-  }
+.nav-text {
+  display: block;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  opacity: 1;
+  transform: translateX(0);
+  transition:
+    opacity .18s ease,
+    transform .22s ease,
+    max-width .25s ease;
+}
 
-  .feedback-option:hover {
-    transform: translateY(-2px);
-  }
+/* -----------------------------
+   Footer
+------------------------------ */
 
-  .feedback-option-discord:hover {
-    border-color: rgba(88, 101, 242, 0.7);
-    background: rgba(88, 101, 242, 0.12);
-    box-shadow: 0 0 20px rgba(88, 101, 242, 0.35);
-  }
+.sidebar-footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  overflow: hidden;
+  transition:
+    gap .25s ease,
+    padding .25s ease,
+    justify-content .25s ease;
+}
 
-  .feedback-option-mail:hover {
-    border-color: rgba(34, 197, 94, 0.7);
-    background: rgba(34, 197, 94, 0.12);
-    box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
-  }
+.sidebar-footer p.nav-text {
+  max-width: 160px;
+}
 
-  .feedback-option-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 0.75rem;
-    flex-shrink: 0;
-  }
+.sidebar-footer img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  flex-shrink: 0;
+  transition: transform .25s ease;
+}
 
-  .feedback-option-discord .feedback-option-icon {
-    background: rgba(88, 101, 242, 0.15);
-    color: #8ea1ff;
-  }
+/* -----------------------------
+   Feedback Button
+------------------------------ */
 
-  .feedback-option-mail .feedback-option-icon {
-    background: rgba(34, 197, 94, 0.15);
-    color: #4ade80;
-  }
+.feedback-btn-wrap button {
+  transition:
+    width .25s ease,
+    height .25s ease,
+    padding .25s ease,
+    border-radius .25s ease,
+    justify-content .25s ease;
+}
 
-  .feedback-option-body {
-    flex: 1;
-    min-width: 0;
-  }
+.feedback-btn-wrap button > div {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+}
 
-  .feedback-option-body h4 {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 600;
-  }
+/* ==========================================================
+   COLLAPSED SIDEBAR
+========================================================== */
 
-  .feedback-option-body p {
-    margin: 0.2rem 0 0;
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.55);
-  }
+:global(html.sidebar-closed) .sidebar {
+  width: 80px;
+}
 
-  .feedback-option-arrow {
-    font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.4);
-    transition:
-      transform 0.2s ease,
-      color 0.2s ease;
-  }
+:global(html.sidebar-closed) .sidebar-title,
+:global(html.sidebar-closed) .nav-text {
+  width: 0;
+  max-width: 0;
+  opacity: 0;
+  transform: translateX(-8px);
+  pointer-events: none;
+}
 
-  .feedback-option:hover .feedback-option-arrow {
-    transform: translateX(4px);
-    color: #fff;
-  }
+:global(html.sidebar-closed) .sidebar-header {
+  justify-content: center;
+}
+
+:global(html.sidebar-closed) .nav-link {
+  justify-content: center;
+  width: 48px;
+  min-width: 48px;
+  margin-inline: auto;
+  padding-left: 0;
+  padding-right: 0;
+  gap: 0;
+}
+
+:global(html.sidebar-closed) .sidebar-footer {
+  justify-content: center;
+  gap: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+:global(html.sidebar-closed) .sidebar-footer img {
+  transform: scale(.9);
+}
+
+:global(html.sidebar-closed) .feedback-btn-wrap button {
+  width: 48px;
+  min-width: 48px;
+  height: 48px;
+  justify-content: center;
+  padding: 0;
+  border-radius: 14px;
+}
+
+:global(html.sidebar-closed) .feedback-btn-wrap button > div {
+  margin-left: 0;
+}
 </style>
 
 <script>
