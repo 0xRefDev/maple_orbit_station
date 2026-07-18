@@ -1,0 +1,386 @@
+---
+import HomeIcon from "@/icons/HomeIcon.astro";
+import About from "@/icons/AboutIcon.astro";
+import Monster from "@/icons/MonsterIcon.astro";
+import LevelIcon from "@/icons/LevelIcon.astro";
+import MenuIcon from "@/icons/MenuIcon.astro";
+import MessageIcon from "@/icons/MessageIcon.astro";
+import DiscordIcon from "@/icons/DiscordIcon.astro";
+import MailIcon from "@/icons/MailIcon.astro";
+import MOSLogo from "@/assets/logo.png";
+
+const discordUrl = "https://discord.com/users/768556441283461190";
+const email = "refh4ck.dev@gmail.com";
+
+const asideTabs = [
+  { name: "Home", path: "/", icon: HomeIcon, enabled: true },
+  { name: "Level Info", path: "/level", icon: About, enabled: true },
+  { name: "Bosses", path: "/bosses", icon: Monster, enabled: false },
+  {
+    name: "Level Calculator Badge",
+    path: "/level_calc_badge",
+    icon: LevelIcon,
+    enabled: false,
+  },
+];
+---
+
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-header">
+    <button id="toggle-sidebar" aria-label="Toggle Sidebar">
+      <MenuIcon />
+    </button>
+    <h2 class="sidebar-title">Maple Orbit Station</h2>
+  </div>
+  <nav class="sidebar-nav flex flex-col">
+    <ul class="flex flex-col gap-4">
+      {
+        asideTabs.map((tab, i) => (
+          <li>
+            <a
+              href={`${tab.enabled ? tab.path : ""}`}
+              class={`flex gap-3 ${tab.enabled ? "" : "opacity-50 cursor-not-allowed"}`}
+            >
+              <tab.icon class="nav-icon" />
+              {tab.name}
+            </a>
+            {}
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-auto px-3 pb-6">
+      <button
+        id="open-feedback-modal"
+        aria-label="Open Features Feedback"
+        class="group relative overflow-hidden flex w-full items-center py-3 px-3 bg-linear-to-r from-fuchsia-900/40 to-indigo-900/40 border border-fuchsia-500/30 hover:from-fuchsia-600 hover:to-indigo-600 text-white rounded-xl font-bold shadow-[0_0_15px_rgba(217,70,239,0.15)] hover:shadow-[0_0_25px_rgba(217,70,239,0.4)] transition-all duration-300 cursor-pointer"
+      >
+        <div class="relative shrink-0 w-6 h-6 ml-1">
+          <MessageIcon
+            class="w-full h-full text-fuchsia-400 group-hover:text-white transition-colors group-hover:scale-110 duration-300"
+          />
+          <span class="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+            <span
+              class="animate-ping absolute inline-flex h-full w-full rounded-full bg-fuchsia-400 opacity-75"
+            ></span>
+            <span
+              class="relative inline-flex rounded-full h-2.5 w-2.5 bg-fuchsia-200"
+            ></span>
+          </span>
+        </div>
+        <span
+          class="nav-text whitespace-nowrap text-sm font-semibold text-fuchsia-50 group-hover:text-white"
+          >Features Feedback</span
+        >
+      </button>
+    </div>
+  </nav>
+  <footer class="flex gap-5 items-center border-t border-white/10 w-full p-4">
+    <img
+      src={MOSLogo?.src}
+      alt="Maple Orbit Station logo"
+      class="size-16 rounded-full shadow-lg shadow-indigo-100/10 border border-indigo-100/12"
+    />
+    <p class="text-lg italic">
+      Made by <span class="font-semibold">0xRef</span>
+    </p>
+  </footer>
+</aside>
+
+<div id="feedback-modal" class="feedback-modal-overlay" hidden>
+  <div
+    class="feedback-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="feedback-modal-title"
+  >
+    <button
+      id="close-feedback-modal"
+      class="feedback-modal-close"
+      aria-label="Close"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M18 6 6 18M6 6l12 12"></path>
+      </svg>
+    </button>
+
+    <h3 id="feedback-modal-title" class="feedback-modal-title">
+      Share your feedback
+    </h3>
+    <p class="feedback-modal-subtitle">
+      Choose how you'd like to suggest a new feature
+    </p>
+
+    <div class="feedback-modal-options">
+      <a
+        href={discordUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="feedback-option feedback-option-discord"
+      >
+        <div class="feedback-option-icon">
+          <DiscordIcon class="w-8 h-8" />
+        </div>
+        <div class="feedback-option-body">
+          <h4>Discord DM</h4>
+          <p>Send me a direct message on Discord for a quick chat.</p>
+        </div>
+        <span class="feedback-option-arrow">→</span>
+      </a>
+
+      <a
+        href={`mailto:${email}?subject=Feature%20Feedback%20-%20Maple%20Orbit%20Station`}
+        class="feedback-option feedback-option-mail"
+      >
+        <div class="feedback-option-icon">
+          <MailIcon class="w-8 h-8" />
+        </div>
+        <div class="feedback-option-body">
+          <h4>Send an Email</h4>
+          <p>Write me an email describing your feature idea.</p>
+        </div>
+        <span class="feedback-option-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .feedback-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(10, 8, 20, 0.65);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .feedback-modal-overlay.is-open {
+    opacity: 1;
+  }
+
+  .feedback-modal {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    background: linear-gradient(160deg, #1f1b33 0%, #15131f 100%);
+    border: 1px solid rgba(217, 70, 239, 0.3);
+    border-radius: 1.25rem;
+    padding: 2rem 1.75rem 1.75rem;
+    box-shadow: 0 0 40px rgba(217, 70, 239, 0.25);
+    opacity: 0;
+    transform: translateY(24px) scale(0.95);
+    transition:
+      opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .feedback-modal-overlay.is-open .feedback-modal {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .feedback-modal-close {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.6rem;
+    color: rgba(255, 255, 255, 0.55);
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    cursor: pointer;
+    transition:
+      background 0.2s,
+      color 0.2s;
+  }
+
+  .feedback-modal-close:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+  }
+
+  .feedback-modal-title {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .feedback-modal-subtitle {
+    margin: 0.4rem 0 1.5rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .feedback-modal-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .feedback-option {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 0.9rem;
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      background 0.2s ease;
+  }
+
+  .feedback-option:hover {
+    transform: translateY(-2px);
+  }
+
+  .feedback-option-discord:hover {
+    border-color: rgba(88, 101, 242, 0.7);
+    background: rgba(88, 101, 242, 0.12);
+    box-shadow: 0 0 20px rgba(88, 101, 242, 0.35);
+  }
+
+  .feedback-option-mail:hover {
+    border-color: rgba(34, 197, 94, 0.7);
+    background: rgba(34, 197, 94, 0.12);
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+  }
+
+  .feedback-option-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .feedback-option-discord .feedback-option-icon {
+    background: rgba(88, 101, 242, 0.15);
+    color: #8ea1ff;
+  }
+
+  .feedback-option-mail .feedback-option-icon {
+    background: rgba(34, 197, 94, 0.15);
+    color: #4ade80;
+  }
+
+  .feedback-option-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .feedback-option-body h4 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .feedback-option-body p {
+    margin: 0.2rem 0 0;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .feedback-option-arrow {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.4);
+    transition:
+      transform 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .feedback-option:hover .feedback-option-arrow {
+    transform: translateX(4px);
+    color: #fff;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggleBtn = document.getElementById("toggle-sidebar");
+    const overlay = document.getElementById("overlay");
+
+    const toggleSidebar = () => {
+      document.documentElement.classList.toggle("sidebar-closed");
+      const isClosed =
+        document.documentElement.classList.contains("sidebar-closed");
+      localStorage.setItem("sidebarClosed", isClosed.toString());
+    };
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener("click", toggleSidebar);
+    }
+
+    if (overlay) {
+      overlay.addEventListener("click", () => {
+        document.documentElement.classList.add("sidebar-closed");
+        localStorage.setItem("sidebarClosed", "true");
+      });
+    }
+
+    const feedbackModal = document.getElementById("feedback-modal");
+    const openBtn = document.getElementById("open-feedback-modal");
+    const closeBtn = document.getElementById("close-feedback-modal");
+
+    const openModal = () => {
+      if (!feedbackModal) return;
+      feedbackModal.hidden = false;
+      requestAnimationFrame(() => {
+        feedbackModal.classList.add("is-open");
+      });
+      document.addEventListener("keydown", onEscKey);
+    };
+
+    const closeModal = () => {
+      if (!feedbackModal) return;
+      feedbackModal.classList.remove("is-open");
+      const onEnd = (e: Event) => {
+        if (e.target !== feedbackModal) return;
+        feedbackModal.hidden = true;
+        feedbackModal.removeEventListener("transitionend", onEnd);
+      };
+      feedbackModal.addEventListener("transitionend", onEnd);
+      document.removeEventListener("keydown", onEscKey);
+    };
+
+    const onEscKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeModal();
+    };
+
+    if (openBtn) openBtn.addEventListener("click", openModal);
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+    if (feedbackModal) {
+      feedbackModal.addEventListener("click", (e) => {
+        if (e.target === feedbackModal) closeModal();
+      });
+    }
+  });
+</script>

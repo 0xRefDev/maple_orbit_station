@@ -1,0 +1,354 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import LinkIcon from "@/icons/Link.astro";
+import DatabaseIcon from "@/icons/Database.astro";
+import ChartIcon from "@/icons/Chart.astro";
+import RadarIcon from "@/icons/Radar.astro";
+import ShopIcon from "@/icons/Shop.astro";
+import SettingsIcon from "@/icons/Settings.astro";
+import ActivityIcon from "@/icons/Activity.astro";
+import Logo from "@/assets/logo.png";
+---
+
+<Layout>
+  <main class="relative w-full min-h-screen text-white overflow-hidden pb-20">
+    <!-- Background Effects -->
+    <div class="fixed inset-0 pointer-events-none z-0">
+      <!-- Deep space background base -->
+      <div class="absolute inset-0 bg-[#0a0f1c]"></div>
+      <!-- Subtle glowing orbs -->
+      <div
+        class="absolute top-1/2 left-1/6 w-125 h-125 bg-cyan-900/30 rounded-full blur-[120px]"
+      >
+      </div>
+      <div
+        class="absolute bottom-1/4 right-1/4 w-150 h-150 bg-indigo-900/10 rounded-full blur-[150px] mix-blend-screen"
+      >
+      </div>
+      <canvas id="dots-canvas" class="absolute inset-0 w-full h-full"></canvas>
+    </div>
+
+    <div class="relative z-10 max-w-5xl mx-auto px-6 pt-20">
+      <div class="flex flex-col items-center text-center mb-16">
+        <div
+          class="relative w-50 h-50 flex items-center justify-center bg-[#070b14] border border-cyan-500/40 shadow-[0_0_60px_rgba(34,211,238,0.15)] mb-10 group overflow-hidden rounded-full"
+        >
+          <div
+            class="absolute inset-0 bg-linear-to-b from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          >
+          </div>
+          <img src={Logo.src} />
+        </div>
+
+        <h1
+          class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4"
+          aria-label="MAPLE ORBIT STATION"
+        >
+          <span
+            id="typewriter-title"
+            class="inline-block whitespace-pre after:content-[''] after:inline-block after:w-[3px] after:h-[0.85em] after:-mb-[0.05em] after:ml-1 after:bg-cyan-400 after:animate-[blink_1s_steps(1)_infinite]"
+            data-text="MAPLE ORBIT STATION"></span>
+          <br />
+          <span
+            class="text-transparent bg-clip-text bg-linear-to-r from-cyan-300 to-cyan-500 drop-shadow-[0_0_10px_rgba(34,211,238,0.4)]"
+            >Community Tool</span
+          >
+        </h1>
+
+        <p
+          class="text-gray-200 text-lg md:text-xl max-w-2xl mx-auto font-light tracking-wide leading-relaxed"
+        >
+          The ultimate command center for boss tracking, stat optimization, and
+          real-time player telemetry. Initialize your journey.
+        </p>
+      </div>
+
+      <div class="mb-16">
+        <div class="flex items-center gap-3 mb-6">
+          <SettingsIcon class="w-6 h-6 text-cyan-400" />
+          <h2 class="text-2xl font-bold tracking-wider text-cyan-50">
+            STATION MODULES
+          </h2>
+        </div>
+
+        <section
+          class="relative bg-white/10 p-10 flex justify-center items-center rounded-xl border-2 border-white/20 shadow-2xl inset-shadow-sm inset-shadow-amber-500"
+        >
+          <p class="absolute z-999 text-5xl font-bold text-orange-300">Under Development</p>
+          <article class="blur-lg grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div
+              class="group relative bg-[#0d121f]/80 backdrop-blur-sm border border-[#1e293b] p-6 hover:bg-[#111827]/90 transition-all duration-300 hover:border-cyan-900/50"
+            >
+              <div class="flex justify-between items-start mb-4">
+                <DatabaseIcon
+                  class="w-7 h-7 text-red-400 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_8px_rgba(248,113,113,0.5)]"
+                />
+                <span
+                  class="text-[10px] font-bold tracking-widest px-2 py-1 bg-red-950/50 border border-red-900 text-red-400 rounded-sm"
+                  >CRITICAL</span
+                >
+              </div>
+              <h3 class="text-lg font-semibold text-white mb-2">
+                Boss Database Matrix
+              </h3>
+              <p class="text-sm text-gray-400 mb-6 leading-relaxed">
+                Comprehensive telemetry on cosmic threats. Track spawn times,
+                drop tables, and optimal engagement strategies.
+              </p>
+              <div
+                class="w-full h-1.5 bg-[#1e293b] rounded-full overflow-hidden"
+              >
+                <div
+                  class="h-full bg-linear-to-r from-red-500 to-orange-400 w-[65%] rounded-full shadow-[0_0_10px_rgba(239,68,68,0.8)]"
+                >
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="group relative bg-[#0d121f]/80 backdrop-blur-sm border border-[#1e293b] p-6 hover:bg-[#111827]/90 transition-all duration-300 hover:border-yellow-900/50 overflow-hidden"
+            >
+              <div class="mb-4">
+                <ChartIcon
+                  class="w-7 h-7 text-yellow-400 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_8px_rgba(250,204,21,0.5)]"
+                />
+              </div>
+              <h3 class="text-lg font-semibold text-white mb-2">
+                Stat Optimizer
+              </h3>
+              <p class="text-sm text-gray-400 leading-relaxed relative z-10">
+                Algorithmic gear analysis to maximize DPS and survivability in
+                vacuum environments.
+              </p>
+            </div>
+
+            <div
+              class="group relative bg-[#0d121f]/80 backdrop-blur-sm border border-[#1e293b] p-6 hover:bg-[#111827]/90 transition-all duration-300 hover:border-indigo-900/50 overflow-hidden"
+            >
+              <div
+                class="absolute inset-0 bg-[radial-linear(ellipse_at_top_right,var(--tw-linear-stops))] from-indigo-900/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+              </div>
+              <div class="mb-4 relative z-10">
+                <RadarIcon
+                  class="w-7 h-7 text-indigo-400 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_8px_rgba(129,140,248,0.5)]"
+                />
+              </div>
+              <h3 class="text-lg font-semibold text-white mb-2 relative z-10">
+                Player Telemetry
+              </h3>
+              <p
+                class="text-sm text-gray-400 leading-relaxed mb-6 relative z-10"
+              >
+                Global radar for locating allies, inspecting gear, and analyzing
+                guild distribution across sectors.
+              </p>
+            </div>
+
+            <div
+              class="group relative bg-[#0d121f]/80 backdrop-blur-sm border border-[#1e293b] p-6 hover:bg-[#111827]/90 transition-all duration-300 hover:border-cyan-900/50 overflow-hidden"
+            >
+              <ShopIcon
+                class="absolute -right-6 -bottom-6 w-48 h-48 text-white/2 group-hover:text-cyan-500/5 transition-colors duration-500 transform -rotate-12"
+              />
+
+              <div class="relative z-10 h-full flex flex-col justify-between">
+                <div>
+                  <h3 class="text-lg font-semibold text-white mb-2">
+                    Galactic Market Tracker
+                  </h3>
+                  <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    Real-time neso exchange rates and item value fluctuations.
+                  </p>
+                </div>
+                <div>
+                  <button
+                    class="px-4 py-2 border border-[#2d3b54] text-cyan-400 text-xs font-semibold tracking-wider hover:bg-cyan-950/30 hover:border-cyan-800 transition-all rounded-sm uppercase"
+                  >
+                    Access Terminal
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+      </div>
+
+      <!-- <div>
+        <div class="flex items-center gap-3 mb-6">
+          <ActivityIcon class="w-6 h-6 text-cyan-400" />
+          <h2 class="text-2xl font-bold tracking-wider text-cyan-50">
+            REAL-TIME ORBITAL DATA
+          </h2>
+        </div>
+
+        <div
+          class="bg-[#0d121f]/80 backdrop-blur-sm border border-[#1e293b] rounded-sm p-8"
+        >
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 divide-y sm:divide-y-0 sm:divide-x divide-[#1e293b]"
+          >
+            <div class="flex flex-col items-center justify-center pt-4 sm:pt-0">
+              <span
+                class="text-[10px] font-bold tracking-widest text-gray-400 mb-2"
+                >SERVER UPTIME</span
+              >
+              <span class="text-3xl font-light text-cyan-400">99.98%</span>
+            </div>
+
+            <div class="flex flex-col items-center justify-center pt-4 sm:pt-0">
+              <span
+                class="text-[10px] font-bold tracking-widest text-gray-400 mb-2"
+                >ACTIVE COMMANDERS</span
+              >
+              <span class="text-3xl font-light text-white">14,203</span>
+            </div>
+
+            <div class="flex flex-col items-center justify-center pt-4 sm:pt-0">
+              <span
+                class="text-[10px] font-bold tracking-widest text-gray-400 mb-2"
+                >GLOBAL BOSS CLEARS</span
+              >
+              <span class="text-3xl font-light text-yellow-500">842.1K</span>
+            </div>
+
+            <div class="flex flex-col items-center justify-center pt-4 sm:pt-0">
+              <span
+                class="text-[10px] font-bold tracking-widest text-gray-400 mb-2"
+                >STATION INTEGRITY</span
+              >
+              <span class="text-3xl font-light text-gray-200">OPTIMAL</span>
+            </div>
+          </div>
+        </div>
+      </div> -->
+    
+		</div>
+  </main>
+
+  <style>
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+  </style>
+
+  <script>
+    function initDotsField() {
+      const canvas = document.getElementById(
+        "dots-canvas",
+      ) as HTMLCanvasElement;
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      let width: number, height: number;
+      let dots: { baseX: number; baseY: number; x: number; y: number }[] = [];
+      const mouse = { x: -9999, y: -9999 };
+
+      const SPACING = 30;
+      const RADIUS = 60;
+      const STRENGTH = 10;
+
+      function resize() {
+        width = canvas.width = canvas.offsetWidth;
+        height = canvas.height = canvas.offsetHeight;
+        buildDots();
+      }
+
+      function buildDots() {
+        dots = [];
+        const cols = Math.ceil(width / SPACING) + 1;
+        const rows = Math.ceil(height / SPACING) + 1;
+        for (let i = 0; i < cols; i++) {
+          for (let j = 0; j < rows; j++) {
+            dots.push({
+              baseX: i * SPACING,
+              baseY: j * SPACING,
+              x: i * SPACING,
+              y: j * SPACING,
+            });
+          }
+        }
+      }
+
+      function animate() {
+        if (!ctx) return;
+        ctx.clearRect(0, 0, width, height);
+
+        for (const dot of dots) {
+          const dx = mouse.x - dot.baseX;
+          const dy = mouse.y - dot.baseY;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          let targetX = dot.baseX;
+          let targetY = dot.baseY;
+          let alpha = 0.18;
+          let radius = 1.3;
+
+          if (dist < RADIUS) {
+            const force = 1 - dist / RADIUS;
+            const angle = Math.atan2(dy, dx);
+            targetX = dot.baseX - Math.cos(angle) * force * STRENGTH;
+            targetY = dot.baseY - Math.sin(angle) * force * STRENGTH;
+            alpha = 0.18 + force * 0.65;
+            radius = 1.3 + force * 1.4;
+          }
+
+          dot.x += (targetX - dot.x) * 0.15;
+          dot.y += (targetY - dot.y) * 0.15;
+
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(34, 211, 238, ${alpha})`;
+          ctx.arc(dot.x, dot.y, radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      window.addEventListener("mousemove", (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      });
+
+      window.addEventListener("mouseleave", () => {
+        mouse.x = -9999;
+        mouse.y = -9999;
+      });
+
+      window.addEventListener("resize", resize);
+
+      resize();
+      animate();
+    }
+
+    function initTypewriter() {
+      const el = document.getElementById("typewriter-title");
+      if (!el) return;
+
+      const fullText = el.getAttribute("data-text") || "";
+      const SPEED_MS = 65;
+
+      el.textContent = "";
+      let i = 0;
+
+      function type() {
+        if (i <= fullText.length) {
+          el.textContent = fullText.slice(0, i);
+          i++;
+          setTimeout(type, SPEED_MS);
+        }
+      }
+
+      type();
+    }
+
+    initDotsField();
+    initTypewriter();
+    document.addEventListener("astro:page-load", () => {
+      initDotsField();
+      initTypewriter();
+    });
+  </script>
+</Layout>

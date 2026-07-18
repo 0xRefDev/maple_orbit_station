@@ -1,0 +1,146 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Header from '@/components/Header.astro';
+import levelData from '@/lib/static/level_data.json';
+import SearchIcon from '@/icons/Search.astro';
+
+const levels = levelData.levels;
+const reversedLevels = [...levels].reverse();
+
+function formatExp(value, unit: String) {
+	if (value === null || value === undefined) return 'Level Cap';
+	const unitSuffix = {
+		'units': '',
+		'thousands': 'k',
+		'millions': 'M',
+		'billions': 'B',
+		'trillions': 'T'
+	};
+	const suffix = unitSuffix[unit] !== undefined ? unitSuffix[unit] : (unit === 'units' ? '' : ` ${unit}`);
+	return `${value.toLocaleString()}${suffix}`;
+}
+---
+
+<Layout>
+
+	<main class="w-full h-[calc(100dvh)]">
+		<div class="relative w-full h-full flex flex-col bg-[#0d1117] border-t border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden">
+
+			<div class="absolute -top-24 -right-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute -bottom-24 -left-24 w-96 h-96 bg-fuchsia-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+			<section class="relative px-8 py-6 border-b border-white/10 bg-black/30 z-20">
+				<article class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+					<div>
+						<h2 class="text-2xl font-bold bg-clip-text text-transparent bg-linear-to-r from-indigo-400 to-fuchsia-400">Experience Progression</h2>
+						<p class="text-sm text-gray-400 mt-2 font-medium">Detailed breakdown of EXP requirements from Level 1 to {levels[levels.length - 1].lvl}</p>
+					</div>
+					<div class="flex items-center gap-4">
+						<div class="relative">
+							<div class="absolute inset-y-0 left-0 flex items-center z-10 pl-3 pointer-events-none">
+								<SearchIcon />
+							</div>
+							<input type="text" id="level-search" class="block w-full sm:w-64 p-2.5 pl-10 text-sm text-white bg-white/5 border border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-400 backdrop-blur-sm transition-all focus:bg-white/10 outline-none" placeholder="Search level (e.g. 100)">
+						</div>
+					</div>
+				</article>
+			</section>
+
+			<section class="relative flex-1 overflow-auto custom-scrollbar">
+				<table class="w-full min-w-160 text-left border-collapse">
+					<thead class="sticky top-0 bg-[#131a24] z-10">
+						<tr>
+							<th class="py-4 px-8 text-xs font-bold text-gray-300 uppercase tracking-widest border-b-2 border-indigo-500/30 w-32">Level</th>
+							<th class="py-4 px-8 text-xs font-bold text-gray-300 uppercase tracking-widest border-b-2 border-indigo-500/30">EXP to Next Level</th>
+							<th class="py-4 px-8 text-xs font-bold text-gray-300 uppercase tracking-widest border-b-2 border-indigo-500/30 text-right">Cumulative EXP</th>
+						</tr>
+					</thead>
+					<tbody>
+						{reversedLevels.map((level, i) => (
+							<tr
+								class:list={[
+									'level-row group transition-colors duration-150 border-b border-white/5 hover:bg-indigo-500/10',
+									i % 2 === 0 ? 'bg-white/2' : 'bg-transparent'
+								]}
+								data-level={level.lvl}
+							>
+								<td class="py-4 px-8 whitespace-nowrap">
+									<div class="flex items-center gap-4">
+										<div class="flex items-center justify-center w-11 h-11 rounded-xl bg-linear-to-br from-indigo-500/15 to-fuchsia-500/15 text-indigo-300 font-bold text-base border border-indigo-500/20 shadow-[0_0_15px_rgba(99,102,241,0.1)] group-hover:scale-105 group-hover:from-indigo-500 group-hover:to-fuchsia-500 group-hover:text-white transition-all duration-200">
+											{level.lvl}
+										</div>
+									</div>
+								</td>
+								<td class="py-4 px-8 whitespace-nowrap text-gray-200 font-mono text-base group-hover:text-white transition-colors">
+									<span class="bg-white/6 px-3 py-1.5 rounded-lg border border-white/10">
+										{formatExp(level.exp, level.units)}
+									</span>
+								</td>
+								<td class="py-4 px-8 whitespace-nowrap font-mono text-base text-right">
+									<span class="font-semibold bg-linear-to-r from-indigo-500/15 to-transparent px-4 py-1.5 rounded-lg text-indigo-200 group-hover:text-white transition-colors border-l-2 border-indigo-400/40">
+										{formatExp(level.cumulative_exp, level.units)}
+									</span>
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+
+				<p id="no-results" class="hidden text-center text-gray-400 text-sm py-10">
+					No levels match your search.
+				</p>
+			</section>
+		</div>
+	</main>
+
+	<style>
+		.custom-scrollbar::-webkit-scrollbar {
+			width: 10px;
+			height: 10px;
+		}
+		.custom-scrollbar::-webkit-scrollbar-track {
+			background: rgba(0, 0, 0, 0.2);
+			border-radius: 4px;
+		}
+		.custom-scrollbar::-webkit-scrollbar-thumb {
+			background: rgba(255, 255, 255, 0.15);
+			border-radius: 4px;
+		}
+		.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+			background: rgba(255, 255, 255, 0.25);
+		}
+	</style>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			const searchInput = document.getElementById('level-search') as HTMLInputElement;
+			const tableRows = document.querySelectorAll('.level-row') as NodeListOf<HTMLElement>;
+			const noResults = document.getElementById('no-results') as HTMLElement;
+
+			if (searchInput) {
+				searchInput.addEventListener('input', (e) => {
+					const searchTerm = (e.target as HTMLInputElement).value.trim();
+					let visibleCount = 0;
+
+					tableRows.forEach(row => {
+						if (!searchTerm) {
+							row.style.display = '';
+							visibleCount++;
+							return;
+						}
+
+						const level = row.getAttribute('data-level');
+						if (level && level.includes(searchTerm)) {
+							row.style.display = '';
+							visibleCount++;
+						} else {
+							row.style.display = 'none';
+						}
+					});
+
+					noResults.classList.toggle('hidden', visibleCount !== 0);
+				});
+			}
+		});
+	</script>
+</Layout>
