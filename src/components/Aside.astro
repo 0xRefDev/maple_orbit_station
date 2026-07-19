@@ -8,6 +8,8 @@ import MessageIcon from "@/icons/MessageIcon.astro";
 import DiscordIcon from "@/icons/DiscordIcon.astro";
 import MailIcon from "@/icons/MailIcon.astro";
 import MOSLogo from "@/assets/logo.png";
+import Button from "@/components/Button.astro";
+import CloseIcon from "@/icons/CloseIcon.astro";
 
 const discordUrl = "https://discord.com/users/768556441283461190";
 const email = "refh4ck.dev@gmail.com";
@@ -25,322 +27,143 @@ const asideTabs = [
 ];
 ---
 
-<aside id="sidebar" class="sidebar">
-  <div class="sidebar-header">
-    <button id="toggle-sidebar" aria-label="Toggle Sidebar">
-      <MenuIcon />
-    </button>
-    <h2 class="sidebar-title">Maple Orbit Station</h2>
+<aside 
+  id="sidebar" 
+  class="fixed md:relative z-20 flex flex-col shrink-0 h-full overflow-x-hidden overflow-y-auto bg-(--sidebar-bg) text-(--sidebar-text) shadow-[2px_0_8px_rgba(0,0,0,0.1)] transition-all duration-300 ease-in-out w-(--sidebar-width) max-md:translate-x-0 in-[.sidebar-closed_&]:w-(--sidebar-mini-width,80px)"
+>
+  <!-- HEADER -->
+  <div class="h-(--header-height) px-4 flex items-center border-b border-white/5 box-border overflow-hidden shrink-0 transition-[justify-content] duration-250 ease-in-out in-[.sidebar-closed_&]:justify-center bg-[#3e3776] text-white">
+    <Button 
+      id="toggle-sidebar" 
+      aria-label="Toggle Sidebar" 
+      icon={<MenuIcon />}
+      class="bg-transparent border-none cursor-pointer p-2 flex items-center justify-center text-(--sidebar-text) rounded-md transition-colors duration-200 min-w-10 h-10 hover:bg-(--sidebar-hover)"
+    />
+    <h2 class="m-0 ml-3 text-xl font-600 tracking-[0.5px] whitespace-nowrap overflow-hidden w-auto opacity-100 translate-x-0 transition-all duration-250 ease-in-out in-[.sidebar-closed_&]:w-0 in-[.sidebar-closed_&]:opacity-0 in-[.sidebar-closed_&]:-translate-x-2 in-[.sidebar-closed_&]:pointer-events-none">
+      Maple Orbit Station
+    </h2>
   </div>
-  <nav class="sidebar-nav flex flex-col">
-    <ul class="flex flex-col gap-4">
+
+  <!-- NAVIGATION -->
+  <nav class="flex flex-col grow px-2">
+    <ul class="list-none py-4 px-2 m-0 flex flex-col gap-4">
       {
-        asideTabs.map((tab, i) => (
+        asideTabs.map((tab) => (
           <li>
             <a
               href={`${tab.enabled ? tab.path : ""}`}
-              class={`nav-link flex gap-3 ${tab.enabled ? "" : "opacity-50 cursor-not-allowed"}`}
+              class={`group flex items-center gap-3 min-h-12 rounded-[14px] transition-all duration-200 px-4 ease-in-out ${
+                tab.enabled 
+                  ? "text-[#282626e5] font-medium hover:bg-[#8632fb2d] hover:text-[#0c0058]" 
+                  : "cursor-not-allowed bg-yellow-500/30 text-red-600"
+              } in-[.sidebar-closed_&]:justify-center in-[.sidebar-closed_&]:w-12 in-[.sidebar-closed_&]:min-w-12 in-[.sidebar-closed_&]:mx-auto in-[.sidebar-closed_&]:px-0 in-[.sidebar-closed_&]:gap-0`}
               title={tab.name}
             >
-              <tab.icon class="nav-icon" />
-              <span class="nav-text">{tab.name}</span>
+              <tab.icon class="w-6 h-6 min-w-6 min-height-6 shrink-0 flex-[0_0_24px] transition-transform duration-200 ease-in-out group-hover:scale-105" />
+              <span class="ml-4 block max-w-50 whitespace-nowrap overflow-hidden opacity-100 translate-x-0 transition-all duration-250 ease-in-out in-[.sidebar-closed_&]:w-0 in-[.sidebar-closed_&]:max-w-0 in-[.sidebar-closed_&]:opacity-0 in-[.sidebar-closed_&]:-translate-x-2 in-[.sidebar-closed_&]:pointer-events-none">
+                {tab.name}
+              </span>
             </a>
-            {}
           </li>
         ))
       }
     </ul>
 
-    <div class="mt-auto px-3 pb-6 feedback-btn-wrap">
+    <!-- FEEDBACK BUTTON -->
+    <div class="mt-auto px-3 pb-6">
       <button
         id="open-feedback-modal"
         aria-label="Open Features Feedback"
         title="Features Feedback"
-        class="group relative overflow-hidden flex w-full items-center py-3 px-3 bg-linear-to-r from-fuchsia-900/40 to-indigo-900/40 border border-fuchsia-500/30 hover:from-fuchsia-600 hover:to-indigo-600 text-white rounded-xl font-bold shadow-[0_0_15px_rgba(217,70,239,0.15)] hover:shadow-[0_0_25px_rgba(217,70,239,0.4)] transition-all duration-300 cursor-pointer"
+        class="group relative overflow-hidden flex w-full items-center py-3 px-3 bg-linear-to-r from-[#3e3776] to-indigo-900/50 border hover:from-fuchsia-600 hover:to-indigo-600 text-white rounded-xl font-bold shadow-[0_0_15px_rgba(217,70,239,0.15)] hover:shadow-[0_0_25px_rgba(217,70,239,0.4)] transition-all duration-300 cursor-pointer in-[.sidebar-closed_&]:w-12 in-[.sidebar-closed_&]:min-w-12 in-[.sidebar-closed_&]:h-12 in-[.sidebar-closed_&]:justify-center in-[.sidebar-closed_&]:p-0 in-[.sidebar-closed_&]:rounded-[14px]"
       >
-        <div class="relative shrink-0 w-6 h-6 ml-1">
+        <div class="relative shrink-0 w-6 h-6 ml-1 transition-[margin] duration-250 ease-in-out in-[.sidebar-closed_&]:ml-0 flex items-center justify-center flex-[0_0_24px]">
           <MessageIcon
-            class="w-full h-full text-fuchsia-400 group-hover:text-white transition-colors group-hover:scale-110 duration-300"
+            class="w-full h-full text-fuchsia-100 group-hover:text-white transition-colors group-hover:scale-110 duration-300"
           />
           <span class="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-            <span
-              class="animate-ping absolute inline-flex h-full w-full rounded-full bg-fuchsia-400 opacity-75"
-            ></span>
-            <span
-              class="relative inline-flex rounded-full h-2.5 w-2.5 bg-fuchsia-200"
-            ></span>
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-fuchsia-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-fuchsia-200"></span>
           </span>
         </div>
-        <span
-          class="nav-text whitespace-nowrap text-sm font-semibold text-fuchsia-50 group-hover:text-white"
-          >Features Feedback</span
-        >
+        <span class="ml-4 block max-w-40 whitespace-nowrap overflow-hidden text-sm font-semibold text-fuchsia-50 group-hover:text-white transition-all duration-250 ease-in-out in-[.sidebar-closed]:w-0 in-[.sidebar-closed]:max-w-0 in-[.sidebar-closed]:opacity-0 in-[.sidebar-closed]:-translate-x-2 in-[.sidebar-closed]:pointer-events-none">
+          Features Feedback
+        </span>
       </button>
     </div>
   </nav>
-  <footer class="sidebar-footer flex gap-5 items-center border-t border-white/10 w-full p-4">
+
+  <!-- FOOTER -->
+  <footer class="flex items-center gap-4 border-t border-white/10 w-full p-4 transition-all duration-250 ease-in-out in-[.sidebar-closed]:justify-center in-[.sidebar-closed]:gap-0 in-[.sidebar-closed]:px-0">
     <img
       src={MOSLogo?.src}
       alt="Maple Orbit Station logo"
-      class="size-16 rounded-full shadow-lg shadow-indigo-100/10 border border-indigo-100/12 shrink-0"
+      class="size-16 rounded-full shadow-lg shadow-indigo-100/10 border border-indigo-100/12 shrink-0 transition-transform duration-250 ease-in-out in-[.sidebar-closed]:scale-90"
     />
-    <p class="nav-text text-lg italic">
+    <p class="ml-4 block max-w-40 whitespace-nowrap overflow-hidden text-lg italic transition-all duration-250 ease-in-out in-[.sidebar-closed]:w-0 in-[.sidebar-closed]:max-w-0 in-[.sidebar-closed]:opacity-0 in-[.sidebar-closed]:-translate-x-2 in-[.sidebar-closed]:pointer-events-none">
       Made by <span class="font-semibold">0xRef</span>
     </p>
   </footer>
 </aside>
 
-<div id="feedback-modal" class="feedback-modal-overlay" hidden>
+<div id="overlay" class="fixed inset-0 bg-black/50 z-10 hidden opacity-0 transition-opacity duration-350 [:not(.sidebar-closed)_&]:max-md:block [:not(.sidebar-closed)_&]:max-md:opacity-100" />
+
+<div 
+  id="feedback-modal" 
+  class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 invisible opacity-0 transition-all duration-300 ease-out [&.is-open]:visible [&.is-open]:opacity-100" 
+  hidden
+>
   <div
-    class="feedback-modal"
+    class="relative bg-[#1a1924] border border-white/10 rounded-2xl w-full max-w-md p-6 shadow-2xl transform scale-95 transition-transform duration-300 ease-out [.is-open_&]:scale-100"
     role="dialog"
     aria-modal="true"
     aria-labelledby="feedback-modal-title"
   >
-    <button
+    <Button
       id="close-feedback-modal"
-      class="feedback-modal-close"
-      aria-label="Close"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M18 6 6 18M6 6l12 12"></path>
-      </svg>
-    </button>
+      class="absolute top-4 right-4 text-white/40 hover:text-white bg-transparent border-none cursor-pointer p-1 rounded-lg transition-colors"
+      aria-label="Close" icon={<CloseIcon/>} />
 
-    <h3 id="feedback-modal-title" class="feedback-modal-title">
+    <h3 id="feedback-modal-title" class="text-xl font-bold text-white m-0 mb-1">
       Share your feedback
     </h3>
-    <p class="feedback-modal-subtitle">
+    <p class="text-sm text-white/60 m-0 mb-6">
       Choose how you'd like to suggest a new feature
     </p>
 
-    <div class="feedback-modal-options">
+    <div class="flex flex-col gap-3">
       <a
         href={discordUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="feedback-option feedback-option-discord"
+        class="group flex items-center p-4 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 hover:bg-[#5865F2] text-white decoration-none transition-all duration-200"
       >
-        <div class="feedback-option-icon">
+        <div class="text-[#5865F2] group-hover:text-white transition-colors mr-4 shrink-0">
           <DiscordIcon class="w-8 h-8" />
         </div>
-        <div class="feedback-option-body">
-          <h4>Discord DM</h4>
-          <p>Send me a direct message on Discord for a quick chat.</p>
+        <div class="grow flex flex-col gap-0.5">
+          <h4 class="m-0 text-base font-semibold">Discord DM</h4>
+          <p class="m-0 text-xs text-white/60 group-hover:text-white/80 transition-colors">Send me a direct message on Discord for a quick chat.</p>
         </div>
-        <span class="feedback-option-arrow">→</span>
+        <span class="text-lg opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all">→</span>
       </a>
 
       <a
         href={`mailto:${email}?subject=Feature%20Feedback%20-%20Maple%20Orbit%20Station`}
-        class="feedback-option feedback-option-mail"
+        class="group flex items-center p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white decoration-none transition-all duration-200"
       >
-        <div class="feedback-option-icon">
+        <div class="text-fuchsia-400 transition-colors mr-4 shrink-0">
           <MailIcon class="w-8 h-8" />
         </div>
-        <div class="feedback-option-body">
-          <h4>Send an Email</h4>
-          <p>Write me an email describing your feature idea.</p>
+        <div class="grow flex flex-col gap-0.5">
+          <h4 class="m-0 text-base font-semibold">Send an Email</h4>
+          <p class="m-0 text-xs text-white/60">Write me an email describing your feature idea.</p>
         </div>
-        <span class="feedback-option-arrow">→</span>
+        <span class="text-lg opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all">→</span>
       </a>
     </div>
   </div>
 </div>
-
-<style>
-  /* --- Collapsed sidebar responsiveness ---
-     Assumes your global CSS already handles the base `.sidebar` width/
-     transition and toggles `sidebar-closed` on <html> (as your script does).
-     These rules only handle what happens to icons/text in that state. */
-
-  /* ==========================================================
-   SIDEBAR
-========================================================== */
-
-.sidebar {
-  overflow-x: hidden;
-  overflow-y: auto;
-  transition:
-    width .28s cubic-bezier(.4, 0, .2, 1),
-    box-shadow .25s ease;
-}
-
-/* -----------------------------
-   Header
------------------------------- */
-
-.sidebar-header {
-  transition: justify-content .25s ease;
-}
-
-.sidebar-title {
-  width: auto;
-  opacity: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  transform: translateX(0);
-  transition:
-    opacity .2s ease,
-    width .25s ease,
-    transform .25s ease;
-}
-
-/* -----------------------------
-   Navigation
------------------------------- */
-
-.nav-link {
-  display: flex;
-  align-items: center;
-  min-height: 48px;
-  border-radius: 14px;
-  transition:
-    background .2s ease,
-    transform .2s ease,
-    gap .25s ease,
-    justify-content .25s ease;
-}
-
-.nav-icon {
-  width: 24px;
-  height: 24px;
-  min-width: 24px;
-  min-height: 24px;
-  flex: 0 0 24px;
-  transition: transform .2s ease;
-}
-
-.nav-text {
-  display: block;
-  max-width: 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  opacity: 1;
-  transform: translateX(0);
-  transition:
-    opacity .18s ease,
-    transform .22s ease,
-    max-width .25s ease;
-}
-
-/* -----------------------------
-   Footer
------------------------------- */
-
-.sidebar-footer {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  overflow: hidden;
-  transition:
-    gap .25s ease,
-    padding .25s ease,
-    justify-content .25s ease;
-}
-
-.sidebar-footer p.nav-text {
-  max-width: 160px;
-}
-
-.sidebar-footer img {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center;
-  flex-shrink: 0;
-  transition: transform .25s ease;
-}
-
-/* -----------------------------
-   Feedback Button
------------------------------- */
-
-.feedback-btn-wrap button {
-  transition:
-    width .25s ease,
-    height .25s ease,
-    padding .25s ease,
-    border-radius .25s ease,
-    justify-content .25s ease;
-}
-
-.feedback-btn-wrap button > div {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  flex: 0 0 24px;
-}
-
-/* ==========================================================
-   COLLAPSED SIDEBAR
-========================================================== */
-
-:global(html.sidebar-closed) .sidebar {
-  width: 80px;
-}
-
-:global(html.sidebar-closed) .sidebar-title,
-:global(html.sidebar-closed) .nav-text {
-  width: 0;
-  max-width: 0;
-  opacity: 0;
-  transform: translateX(-8px);
-  pointer-events: none;
-}
-
-:global(html.sidebar-closed) .sidebar-header {
-  justify-content: center;
-}
-
-:global(html.sidebar-closed) .nav-link {
-  justify-content: center;
-  width: 48px;
-  min-width: 48px;
-  margin-inline: auto;
-  padding-left: 0;
-  padding-right: 0;
-  gap: 0;
-}
-
-:global(html.sidebar-closed) .sidebar-footer {
-  justify-content: center;
-  gap: 0;
-  padding-left: 0;
-  padding-right: 0;
-}
-
-:global(html.sidebar-closed) .sidebar-footer img {
-  transform: scale(.9);
-}
-
-:global(html.sidebar-closed) .feedback-btn-wrap button {
-  width: 48px;
-  min-width: 48px;
-  height: 48px;
-  justify-content: center;
-  padding: 0;
-  border-radius: 14px;
-}
-
-:global(html.sidebar-closed) .feedback-btn-wrap button > div {
-  margin-left: 0;
-}
-</style>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
@@ -349,15 +172,11 @@ const asideTabs = [
 
     const toggleSidebar = () => {
       document.documentElement.classList.toggle("sidebar-closed");
-      const isClosed =
-        document.documentElement.classList.contains("sidebar-closed");
+      const isClosed = document.documentElement.classList.contains("sidebar-closed");
       localStorage.setItem("sidebarClosed", isClosed.toString());
     };
 
-    if (toggleBtn) {
-      toggleBtn.addEventListener("click", toggleSidebar);
-    }
-
+    if (toggleBtn) toggleBtn.addEventListener("click", toggleSidebar);
     if (overlay) {
       overlay.addEventListener("click", () => {
         document.documentElement.classList.add("sidebar-closed");
@@ -381,7 +200,7 @@ const asideTabs = [
     const closeModal = () => {
       if (!feedbackModal) return;
       feedbackModal.classList.remove("is-open");
-      const onEnd = (e: Event) => {
+      const onEnd = (e: TransitionEvent) => {
         if (e.target !== feedbackModal) return;
         feedbackModal.hidden = true;
         feedbackModal.removeEventListener("transitionend", onEnd);
