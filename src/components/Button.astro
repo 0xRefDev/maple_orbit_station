@@ -1,0 +1,7 @@
+---
+const { text, ariaLabel, title, id, className, icon } = Astro.props;
+---
+
+<button aria-label={ariaLabel} title={title} id={id} class={className}>
+  {text} {icon}
+</button>
