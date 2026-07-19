@@ -8,14 +8,28 @@ import ShopIcon from "@/icons/Shop.astro";
 import SettingsIcon from "@/icons/Settings.astro";
 import ActivityIcon from "@/icons/Activity.astro";
 import Logo from "@/assets/logo.png";
+import MapBg from "@/assets/mushroom.avif";
+import Sign from "@/assets/sign.png";
 ---
 
 <Layout>
-  <main class="relative w-full min-h-screen text-white overflow-hidden pb-20">
+  <main
+    class="relative w-full min-h-screen text-[#282626e5] overflow-hidden pb-20"
+  >
     <!-- Background Effects -->
     <div class="fixed inset-0 pointer-events-none z-0">
       <!-- Deep space background base -->
-      <div class="absolute inset-0 bg-[#0a0f1c]"></div>
+      <div class="absolute inset-0 bg-[#ffffff]"></div>
+
+      <!-- Background image, blurred, sits below the dots layer -->
+      <div class="absolute inset-0 overflow-hidden bg-black">
+        <img
+          src={MapBg.src}
+          alt=""
+          class="w-full h-full object-cover blur-sm opacity-50"
+        />
+      </div>
+
       <!-- Subtle glowing orbs -->
       <div
         class="absolute top-1/2 left-1/6 w-125 h-125 bg-cyan-900/30 rounded-full blur-[120px]"
@@ -28,10 +42,10 @@ import Logo from "@/assets/logo.png";
       <canvas id="dots-canvas" class="absolute inset-0 w-full h-full"></canvas>
     </div>
 
-    <div class="relative z-10 max-w-5xl mx-auto px-6 pt-20">
-      <div class="flex flex-col items-center text-center mb-16">
+    <div class="relative z-10 max-w-5xl mx-auto px-6 pt-12">
+      <div class="flex flex-col items-center text-center mb-26">
         <div
-          class="relative w-50 h-50 flex items-center justify-center bg-[#070b14] border border-cyan-500/40 shadow-[0_0_60px_rgba(34,211,238,0.15)] mb-10 group overflow-hidden rounded-full"
+          class="relative size-30 flex items-center justify-center bg-[#070b14] border border-cyan-500/40 shadow-[0_0_60px_rgba(34,211,238,0.15)] mb-5 group overflow-hidden rounded-full"
         >
           <div
             class="absolute inset-0 bg-linear-to-b from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -40,23 +54,30 @@ import Logo from "@/assets/logo.png";
           <img src={Logo.src} />
         </div>
 
+        <img
+          src={Sign.src}
+          class="absolute -z-999 w-210 opacity-85 h-auto -top-28"
+          alt=""
+        />
         <h1
-          class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4"
+          class="text-3xl text-white md:text-5xl lg:text-4xl font-bold tracking-tight mb-3"
           aria-label="MAPLE ORBIT STATION"
         >
           <span
             id="typewriter-title"
-            class="inline-block whitespace-pre after:content-[''] after:inline-block after:w-[3px] after:h-[0.85em] after:-mb-[0.05em] after:ml-1 after:bg-cyan-400 after:animate-[blink_1s_steps(1)_infinite]"
+            class="inline-block whitespace-pre after:content-[''] after:inline-block after:w-0.75 after:h-[0.85em] after:mb-[-0.05em] after:ml-1 after:bg-cyan-400 after:animate-[blink_1s_steps(1)_infinite]"
             data-text="MAPLE ORBIT STATION"></span>
           <br />
+        </h1>
+        <div class="mb-4 bg-black/40 backdrop-blur-sm p-2 px-4 rounded-lg border-2 border-white/10 shadow-lg">
           <span
-            class="text-transparent bg-clip-text bg-linear-to-r from-cyan-300 to-cyan-500 drop-shadow-[0_0_10px_rgba(34,211,238,0.4)]"
+            class="text-3xl font-semibold text-transparent bg-clip-text bg-linear-to-r from-[#bdcb4efe] to-[#e7ff48fe] drop-shadow-[0_0_10px_rgba(34,211,238,0.4)]"
             >Community Tool</span
           >
-        </h1>
+        </div>
 
         <p
-          class="text-gray-200 text-lg md:text-xl max-w-2xl mx-auto font-light tracking-wide leading-relaxed"
+          class="text-[#dbed4efe] text-lg md:text-xl max-w-2xl mx-auto tracking-wide leading-relaxed bg-black/40 backdrop-blur-md p-4 rounded-lg shadow-xl border-2 border-white/10"
         >
           The ultimate command center for boss tracking, stat optimization, and
           real-time player telemetry. Initialize your journey.
@@ -64,17 +85,19 @@ import Logo from "@/assets/logo.png";
       </div>
 
       <div class="mb-16">
-        <div class="flex items-center gap-3 mb-6">
-          <SettingsIcon class="w-6 h-6 text-cyan-400" />
-          <h2 class="text-2xl font-bold tracking-wider text-cyan-50">
-            STATION MODULES
-          </h2>
+        <div
+          class="flex w-fit text-[#dbed4efe] items-center gap-3 mb-6 bg-black/40 backdrop-blur-md p-4 rounded-lg border-2 border-white/10 shadow-lg"
+        >
+          <SettingsIcon class="w-6 h-6" />
+          <h2 class="text-2xl font-bold tracking-wider">STATION MODULES</h2>
         </div>
 
         <section
           class="relative bg-white/10 p-10 flex justify-center items-center rounded-xl border-2 border-white/20 shadow-2xl inset-shadow-sm inset-shadow-amber-500"
         >
-          <p class="absolute z-999 text-5xl font-bold text-orange-300">Under Development</p>
+          <p class="absolute z-999 text-5xl font-bold text-orange-300">
+            Under Development
+          </p>
           <article class="blur-lg grid grid-cols-1 gap-6 md:grid-cols-2">
             <div
               class="group relative bg-[#0d121f]/80 backdrop-blur-sm border border-[#1e293b] p-6 hover:bg-[#111827]/90 transition-all duration-300 hover:border-cyan-900/50"
@@ -222,14 +245,18 @@ import Logo from "@/assets/logo.png";
           </div>
         </div>
       </div> -->
-    
-		</div>
+    </div>
   </main>
 
   <style>
     @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
+      0%,
+      100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0;
+      }
     }
   </style>
 
@@ -247,7 +274,7 @@ import Logo from "@/assets/logo.png";
       const mouse = { x: -9999, y: -9999 };
 
       const SPACING = 30;
-      const RADIUS = 60;
+      const RADIUS = 100;
       const STRENGTH = 10;
 
       function resize() {
@@ -299,7 +326,7 @@ import Logo from "@/assets/logo.png";
           dot.y += (targetY - dot.y) * 0.15;
 
           ctx.beginPath();
-          ctx.fillStyle = `rgba(34, 211, 238, ${alpha})`;
+          ctx.fillStyle = `#0c005860`;
           ctx.arc(dot.x, dot.y, radius, 0, Math.PI * 2);
           ctx.fill();
         }
