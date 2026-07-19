@@ -24,23 +24,24 @@ function formatExp(value, unit: String) {
 <Layout>
 
 	<main class="w-full h-[calc(100dvh)]">
-		<div class="relative w-full h-full flex flex-col bg-[#0d1117] border-t border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden">
+		<div class="relative w-full h-full flex flex-col bg-white shadow-[0_0_30px_rgba(62,55,118,0.08)] overflow-hidden">
 
-			<div class="absolute -top-24 -right-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-			<div class="absolute -bottom-24 -left-24 w-96 h-96 bg-fuchsia-500/10 rounded-full blur-3xl pointer-events-none"></div>
+			<!-- Subtle glowing orbs -->
+			<div class="absolute -top-24 -right-24 w-96 h-96 bg-[#3e3776]/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute -bottom-24 -left-24 w-96 h-96 bg-[#e7ff48]/10 rounded-full blur-3xl pointer-events-none"></div>
 
-			<section class="relative px-8 py-6 border-b border-white/10 bg-black/30 z-20">
+			<section class="relative px-8 py-6  bg-[#3e3776]">
 				<article class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
 					<div>
-						<h2 class="text-2xl font-bold bg-clip-text text-transparent bg-linear-to-r from-indigo-400 to-fuchsia-400">Experience Progression</h2>
-						<p class="text-sm text-gray-400 mt-2 font-medium">Detailed breakdown of EXP requirements from Level 1 to {levels[levels.length - 1].lvl}</p>
+						<h2 class="text-2xl font-bold tracking-wide text-white drop-shadow-[0_0_8px_rgba(231,255,72,0.3)]">Experience Progression</h2>
+						<p class="text-sm text-[#dbed4efe] mt-2 font-medium">Detailed breakdown of EXP requirements from Level 1 to {levels[levels.length - 1].lvl}</p>
 					</div>
 					<div class="flex items-center gap-4">
 						<div class="relative">
 							<div class="absolute inset-y-0 left-0 flex items-center z-10 pl-3 pointer-events-none">
-								<SearchIcon />
+								<SearchIcon class="w-4 h-4 text-[#3e3776]" />
 							</div>
-							<input type="text" id="level-search" class="block w-full sm:w-64 p-2.5 pl-10 text-sm text-white bg-white/5 border border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-400 backdrop-blur-sm transition-all focus:bg-white/10 outline-none" placeholder="Search level (e.g. 100)">
+							<input type="text" id="level-search" class="block w-full sm:w-64 p-2.5 pl-10 text-sm text-[#0c0058] bg-white/90 border border-[#2826261a] rounded-xl focus:ring-2 focus:ring-[#3e3776]/40 focus:border-[#3e3776] placeholder-[#28262699] transition-all focus:bg-white outline-none shadow-sm" placeholder="Search level (e.g. 100)">
 						</div>
 					</div>
 				</article>
@@ -48,36 +49,36 @@ function formatExp(value, unit: String) {
 
 			<section class="relative flex-1 overflow-auto custom-scrollbar">
 				<table class="w-full min-w-160 text-left border-collapse">
-					<thead class="sticky top-0 bg-[#131a24] z-10">
+					<thead class="sticky top-0 bg-white/95 backdrop-blur-sm z-10">
 						<tr>
-							<th class="py-4 px-8 text-xs font-bold text-gray-300 uppercase tracking-widest border-b-2 border-indigo-500/30 w-32">Level</th>
-							<th class="py-4 px-8 text-xs font-bold text-gray-300 uppercase tracking-widest border-b-2 border-indigo-500/30">EXP to Next Level</th>
-							<th class="py-4 px-8 text-xs font-bold text-gray-300 uppercase tracking-widest border-b-2 border-indigo-500/30 text-right">Cumulative EXP</th>
+							<th class="py-4 px-8 text-xs font-bold text-[#0c0058] uppercase tracking-widest border-b-2 border-[#3e3776]/40 w-32">Level</th>
+							<th class="py-4 px-8 text-xs font-bold text-[#0c0058] uppercase tracking-widest border-b-2 border-[#3e3776]/40">EXP to Next Level</th>
+							<th class="py-4 px-8 text-xs font-bold text-[#0c0058] uppercase tracking-widest border-b-2 border-[#3e3776]/40 text-right">Cumulative EXP</th>
 						</tr>
 					</thead>
 					<tbody>
 						{reversedLevels.map((level, i) => (
 							<tr
 								class:list={[
-									'level-row group transition-colors duration-150 border-b border-white/5 hover:bg-indigo-500/10',
-									i % 2 === 0 ? 'bg-white/2' : 'bg-transparent'
+									'level-row group transition-colors duration-150 border-b border-[#2826260f] hover:bg-[#3e3776]/5',
+									i % 2 === 0 ? 'bg-[#28262605]' : 'bg-transparent'
 								]}
 								data-level={level.lvl}
 							>
 								<td class="py-4 px-8 whitespace-nowrap">
 									<div class="flex items-center gap-4">
-										<div class="flex items-center justify-center w-11 h-11 rounded-xl bg-linear-to-br from-indigo-500/15 to-fuchsia-500/15 text-indigo-300 font-bold text-base border border-indigo-500/20 shadow-[0_0_15px_rgba(99,102,241,0.1)] group-hover:scale-105 group-hover:from-indigo-500 group-hover:to-fuchsia-500 group-hover:text-white transition-all duration-200">
+										<div class="flex items-center justify-center w-11 h-11 rounded-xl bg-linear-to-br from-[#3e3776]/15 to-[#e7ff48]/15 text-[#0c0058] font-bold text-base border border-[#3e3776]/20 shadow-[0_0_12px_rgba(62,55,118,0.1)] group-hover:scale-105 group-hover:from-[#3e3776] group-hover:to-[#bdcb4e] group-hover:text-white transition-all duration-200">
 											{level.lvl}
 										</div>
 									</div>
 								</td>
-								<td class="py-4 px-8 whitespace-nowrap text-gray-200 font-mono text-base group-hover:text-white transition-colors">
-									<span class="bg-white/6 px-3 py-1.5 rounded-lg border border-white/10">
+								<td class="py-4 px-8 whitespace-nowrap text-[#282626e5] font-mono text-base group-hover:text-[#0c0058] transition-colors">
+									<span class="bg-[#28262608] px-3 py-1.5 rounded-lg border border-[#2826261a]">
 										{formatExp(level.exp, level.units)}
 									</span>
 								</td>
 								<td class="py-4 px-8 whitespace-nowrap font-mono text-base text-right">
-									<span class="font-semibold bg-linear-to-r from-indigo-500/15 to-transparent px-4 py-1.5 rounded-lg text-indigo-200 group-hover:text-white transition-colors border-l-2 border-indigo-400/40">
+									<span class="font-semibold bg-linear-to-r from-[#3e3776]/15 to-transparent px-4 py-1.5 rounded-lg text-[#0c0058] group-hover:text-[#3e3776] transition-colors border-l-2 border-[#3e3776]/40">
 										{formatExp(level.cumulative_exp, level.units)}
 									</span>
 								</td>
@@ -86,7 +87,7 @@ function formatExp(value, unit: String) {
 					</tbody>
 				</table>
 
-				<p id="no-results" class="hidden text-center text-gray-400 text-sm py-10">
+				<p id="no-results" class="hidden text-center text-[#28262699] text-sm py-10">
 					No levels match your search.
 				</p>
 			</section>
@@ -99,15 +100,15 @@ function formatExp(value, unit: String) {
 			height: 10px;
 		}
 		.custom-scrollbar::-webkit-scrollbar-track {
-			background: rgba(0, 0, 0, 0.2);
+			background: rgba(62, 55, 118, 0.05);
 			border-radius: 4px;
 		}
 		.custom-scrollbar::-webkit-scrollbar-thumb {
-			background: rgba(255, 255, 255, 0.15);
+			background: rgba(62, 55, 118, 0.2);
 			border-radius: 4px;
 		}
 		.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-			background: rgba(255, 255, 255, 0.25);
+			background: rgba(62, 55, 118, 0.35);
 		}
 	</style>
 
